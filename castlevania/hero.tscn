@@ -1,0 +1,146 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://KinematicBody2D.gd" type="Script" id=2]
+[ext_resource path="res://PlayerFMS.gd" type="Script" id=3]
+[ext_resource path="res://sprite/idle/idle.png" type="Texture" id=4]
+[ext_resource path="res://sprite/walking/New Piskel.png" type="Texture" id=5]
+[ext_resource path="res://sprite/duck/New Piskel.png" type="Texture" id=6]
+[ext_resource path="res://sprite/jump/New Piskel.png" type="Texture" id=7]
+
+[sub_resource type="Animation" id=25]
+resource_name = "ata_idle"
+
+[sub_resource type="Animation" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 24, 61.2604 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 34, 49 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 4 )
+region = Rect2( 34, 0, 34, 49 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
+region = Rect2( 68, 0, 34, 49 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 34, 48 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 6 )
+region = Rect2( 34, 0, 34, 48 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 6 )
+region = Rect2( 68, 0, 34, 48 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 29, 49 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 5 )
+region = Rect2( 29, 0, 29, 49 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 5 )
+region = Rect2( 58, 0, 29, 49 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 5 )
+region = Rect2( 87, 0, 29, 49 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 5 )
+region = Rect2( 116, 0, 29, 49 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 5 )
+region = Rect2( 145, 0, 29, 49 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 5 )
+region = Rect2( 174, 0, 29, 49 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 5 )
+region = Rect2( 203, 0, 29, 49 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 35, 50 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 7 )
+region = Rect2( 35, 0, 35, 50 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 7 )
+region = Rect2( 70, 0, 35, 50 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 7 )
+region = Rect2( 105, 0, 35, 50 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 7 )
+region = Rect2( 140, 0, 35, 50 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 7 )
+region = Rect2( 175, 0, 35, 50 )
+
+[sub_resource type="SpriteFrames" id=17]
+animations = [ {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": false,
+"name": "duck",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
+"loop": true,
+"name": "run",
+"speed": 8.0
+}, {
+"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ) ],
+"loop": false,
+"name": "jump",
+"speed": 15.0
+}, {
+"frames": [ SubResource( 23 ), SubResource( 24 ) ],
+"loop": false,
+"name": "fall",
+"speed": 5.0
+} ]
+
+[node name="hero" type="KinematicBody2D"]
+position = Vector2( 183.91, 102.615 )
+script = ExtResource( 2 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+anims/ata_idle = SubResource( 25 )
+anims/rum = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1.62903, 3.92747 )
+shape = SubResource( 2 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+position = Vector2( 13.7015, -0.814514 )
+scale = Vector2( 3, 3 )
+frames = SubResource( 17 )
+animation = "ata_idle"
+frame = 1
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 3 )

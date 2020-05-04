@@ -1,0 +1,74 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://male/Walk (10).png" type="Texture" id=1]
+[ext_resource path="res://male/Walk (9).png" type="Texture" id=2]
+[ext_resource path="res://male/Walk (8).png" type="Texture" id=3]
+[ext_resource path="res://male/Walk (2).png" type="Texture" id=4]
+[ext_resource path="res://male/Walk (3).png" type="Texture" id=5]
+[ext_resource path="res://male/Walk (4).png" type="Texture" id=6]
+[ext_resource path="res://male/Walk (5).png" type="Texture" id=7]
+[ext_resource path="res://male/Walk (6).png" type="Texture" id=8]
+[ext_resource path="res://male/Walk (7).png" type="Texture" id=9]
+[ext_resource path="res://Monster.gd" type="Script" id=10]
+
+[sub_resource type="Animation" id=1]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.690196, 0.0509804, 0.0509804, 1 ), Color( 0.690196, 0.0509804, 0.0509804, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "die"
+} ]
+}
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "walk",
+"speed": 10.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 18.1507, 28.1321 )
+
+[node name="Monster" type="StaticBody2D"]
+position = Vector2( 1.08073, 4.32288 )
+collision_layer = 4
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="anin" type="AnimationPlayer" parent="."]
+anims/die = SubResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+position = Vector2( -64, 192 )
+scale = Vector2( 0.13, 0.13 )
+frames = SubResource( 2 )
+animation = "walk"
+frame = 7
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+position = Vector2( -68.3229, 196.323 )
+shape = SubResource( 3 )

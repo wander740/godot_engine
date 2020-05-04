@@ -1,0 +1,112 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Player/Run3.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Player/Run7.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Player/Run1.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Player/Run2.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Player/Run4.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Player/Run0.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Player/Jump4.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Player/Jump1.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Player/Jump0.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Player/Jump3.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/Player/Idle0.png" type="Texture" id=12]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "jump",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "run",
+"speed": 10.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 12.5435, 25.3659 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 8.10822, 3.30695 )
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 14.125
+height = 24.7649
+
+[sub_resource type="Animation" id=5]
+resource_name = "a"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.74902, 0.745098, 0.745098, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 384, 224 )
+script = ExtResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 2.10526 )
+scale = Vector2( 1, 0.934211 )
+frames = SubResource( 1 )
+animation = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 0.630249, 5.99328 )
+shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+limit_bottom = 550
+
+[node name="pes" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pes"]
+position = Vector2( 0.309082, 29.5971 )
+shape = SubResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+position = Vector2( 0.713562, 4.51872 )
+collision_layer = 4
+collision_mask = 4
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 4 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
+[node name="invulnerability" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="anin" type="AnimationPlayer" parent="."]
+anims/a = SubResource( 5 )
+[connection signal="tree_entered" from="CollisionShape2D" to="." method="_on_CollisionShape2D_tree_entered"]
+[connection signal="body_entered" from="pes" to="." method="_on_pes_body_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="timeout" from="invulnerability" to="." method="_on_timer_timeout"]
