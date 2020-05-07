@@ -30,3 +30,8 @@ func _jump():
 
 func _assign_animation(anim):
 	$Sprite.play(anim)
+
+func _anim(anim):
+	print("anim")
+	get_node("anim").play(anim)
+	print("anim2")

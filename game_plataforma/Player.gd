@@ -16,6 +16,8 @@ func _physics_process(delta):
 	
 	#gravidade
 	motion.y += GRAVITY*delta
+	#motion.x = Input.get_action_strength("ui_right")\
+	# - Input.get_action_strength("ui_left")
 	if Input.is_action_pressed("ui_right"):
 		motion.x = SPEED
 		$Sprite.play("run")

@@ -2,6 +2,7 @@ extends "res://StateMachine.gd"
 
 enum {IDLE,JUMP,FALL,RUN,DOWN,ATTACK}
 var m_ant
+var old = null
 
 func _move():
 	if Input.is_action_pressed("move_right"):
@@ -64,13 +65,12 @@ func _get_transition(delta):
 				return IDLE
 			elif Input.is_action_pressed("attack"):
 				return ATTACK
-		ATTACK:
-			pass
 	return null
 
 func _enter_state(new_state, old_state):
 	match new_state:
 		IDLE:
+			print("idl")
 			parent._idle()
 			parent._assign_animation("idle")
 		RUN:
@@ -88,7 +88,32 @@ func _enter_state(new_state, old_state):
 			parent._idle()
 			parent._assign_animation("duck")
 		ATTACK:
-			pass
+			print(old_state)
+			match old_state:
+				IDLE:
+					old = old_state
+					parent._anim("ata_idle")
+				RUN:
+					parent._idle()
+					old = IDLE
+					parent._anim("ata_idle")
+				DOWN:
+					old = old_state
+					parent._anim("ata_duck")
+				JUMP:
+					call_deferred("st",old_state)
+				FALL:
+					call_deferred("st",old_state)
 
 func _exit_state(old_state,new_state):
 	pass
+
+func _on_anim_animation_finished(anim_name):
+	if anim_name == "ata_duck":
+		print("n",old)
+		if old !=null:
+			call_deferred("st",old)
+	else:
+		print("m",old)
+		if old !=null:
+			call_deferred("set_state",old)
