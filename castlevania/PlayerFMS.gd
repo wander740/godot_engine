@@ -23,9 +23,13 @@ func _state_logic(delta):
 func _get_transition(delta):
 	match state:
 		IDLE:
+			m_ant = parent.dir
+			var m = _move()
 			if Input.is_action_pressed("jump"):
 				return JUMP
-			elif _move():
+			elif m:
+				if m_ant != parent.dir:
+					parent.vira()
 				return RUN
 			elif Input.is_action_pressed("down"):
 				return DOWN
@@ -45,26 +49,40 @@ func _get_transition(delta):
 			elif !m:
 				return IDLE
 			elif m_ant != parent.dir:
+				parent.vira()
 				return RUN
 		JUMP:
+			m_ant = parent.dir
+			var m = _move()
 			if parent.velocity.y >= 0:
 				return FALL
 			elif Input.is_action_pressed("attack"):
 				return ATTACK
-			elif _move():
+			elif m:
+				if m_ant != parent.dir:
+					parent.vira()
 				return RUN
 		FALL:
+			m_ant = parent.dir
+			var m = _move()
 			if parent.is_on_floor():
 				return IDLE
 			elif Input.is_action_pressed("attack"):
 				return ATTACK
-			elif _move():
+			elif m:
+				if m_ant != parent.dir:
+					parent.vira()
 				return RUN
 		DOWN:
+			m_ant = parent.dir
+			_move()
 			if !Input.is_action_pressed("down"):
 				return IDLE
 			elif Input.is_action_pressed("attack"):
 				return ATTACK
+			elif m_ant != parent.dir:
+				parent.vira()
+				return DOWN
 	return null
 
 func _enter_state(new_state, old_state):
@@ -85,6 +103,10 @@ func _enter_state(new_state, old_state):
 		FALL:
 			parent._assign_animation("fall")
 		DOWN:
+			if parent.dir == "right":
+				parent.lado(false)
+			else:
+				parent.lado(true)
 			parent._idle()
 			parent._assign_animation("duck")
 		ATTACK:
@@ -109,6 +131,7 @@ func _exit_state(old_state,new_state):
 	pass
 
 func _on_anim_animation_finished(anim_name):
+	parent.dis_ata()
 	if anim_name == "ata_duck":
 		print("n",old)
 		if old !=null:

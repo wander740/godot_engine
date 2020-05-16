@@ -22,12 +22,19 @@ func _run():
 		velocity.x = -move_speed
 		$Sprite.flip_h = true
 
+func lado(l):
+	$Sprite.flip_h = l
+
 func _idle():
 	velocity.x = 0
 
 func _jump():
 	velocity.y = jump_velocity
 
+
+func _attack():
+	$attaking/area.disabled = false
+	
 func _assign_animation(anim):
 	$Sprite.play(anim)
 
@@ -35,3 +42,9 @@ func _anim(anim):
 	print("anim")
 	get_node("anim").play(anim)
 	print("anim2")
+
+func dis_ata():
+	$attaking/area.disabled = true
+
+func vira():
+	$attaking.rotation_degrees+=180
