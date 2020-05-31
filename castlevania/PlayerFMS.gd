@@ -1,8 +1,7 @@
 extends "res://StateMachine.gd"
 
-enum {IDLE,JUMP,FALL,RUN,DOWN,ATTACK}
+enum {IDLE,JUMP,FALL,RUN,DOWN}
 var m_ant
-var old = null
 
 func _move():
 	if Input.is_action_pressed("move_right"):
@@ -21,6 +20,8 @@ func _state_logic(delta):
 	parent._apply_movement()
 
 func _get_transition(delta):
+	if parent.state_attack.state!=parent.state_attack.NONE:
+		return null
 	match state:
 		IDLE:
 			m_ant = parent.dir
@@ -33,8 +34,6 @@ func _get_transition(delta):
 				return RUN
 			elif Input.is_action_pressed("down"):
 				return DOWN
-			elif Input.is_action_pressed("attack"):
-				return ATTACK
 		RUN:
 			m_ant = parent.dir
 			var m = _move()
@@ -44,8 +43,6 @@ func _get_transition(delta):
 				return JUMP
 			elif Input.is_action_pressed("down"):
 				return DOWN
-			elif Input.is_action_pressed("attack"):
-				return ATTACK
 			elif !m:
 				return IDLE
 			elif m_ant != parent.dir:
@@ -56,8 +53,6 @@ func _get_transition(delta):
 			var m = _move()
 			if parent.velocity.y >= 0:
 				return FALL
-			elif Input.is_action_pressed("attack"):
-				return ATTACK
 			elif m:
 				if m_ant != parent.dir:
 					parent.vira()
@@ -67,8 +62,6 @@ func _get_transition(delta):
 			var m = _move()
 			if parent.is_on_floor():
 				return IDLE
-			elif Input.is_action_pressed("attack"):
-				return ATTACK
 			elif m:
 				if m_ant != parent.dir:
 					parent.vira()
@@ -78,8 +71,6 @@ func _get_transition(delta):
 			_move()
 			if !Input.is_action_pressed("down"):
 				return IDLE
-			elif Input.is_action_pressed("attack"):
-				return ATTACK
 			elif m_ant != parent.dir:
 				parent.vira()
 				return DOWN
@@ -88,7 +79,6 @@ func _get_transition(delta):
 func _enter_state(new_state, old_state):
 	match new_state:
 		IDLE:
-			print("idl")
 			parent._idle()
 			parent._assign_animation("idle")
 		RUN:
@@ -109,34 +99,9 @@ func _enter_state(new_state, old_state):
 				parent.lado(true)
 			parent._idle()
 			parent._assign_animation("duck")
-		ATTACK:
-			print(old_state)
-			match old_state:
-				IDLE:
-					old = old_state
-					parent._anim("ata_idle")
-				RUN:
-					parent._idle()
-					old = IDLE
-					parent._anim("ata_idle")
-				DOWN:
-					old = old_state
-					parent._anim("ata_duck")
-				JUMP:
-					call_deferred("st",old_state)
-				FALL:
-					call_deferred("st",old_state)
+			parent.on_crunch()
 
 func _exit_state(old_state,new_state):
-	pass
-
-func _on_anim_animation_finished(anim_name):
-	parent.dis_ata()
-	if anim_name == "ata_duck":
-		print("n",old)
-		if old !=null:
-			call_deferred("st",old)
-	else:
-		print("m",old)
-		if old !=null:
-			call_deferred("set_state",old)
+	match old_state:
+		DOWN:
+			parent.on_stand()

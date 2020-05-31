@@ -1,6 +1,7 @@
 extends Node
 class_name StateMachine
 
+#var states = {}
 var state = null setget set_state
 var previus_state = null
 
@@ -36,3 +37,6 @@ func set_state(new_state):
 func st(old_state):
 	previus_state = state
 	state = old_state
+
+#func add_state(state_name):
+#	states[state_name] = states.size()

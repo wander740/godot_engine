@@ -1,0 +1,30 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://sprite/Sub_Weapons/axe/frame0004.png" type="Texture" id=1]
+[ext_resource path="res://sprite/Sub_Weapons/axe/frame0003.png" type="Texture" id=2]
+[ext_resource path="res://sprite/Sub_Weapons/axe/frame0002.png" type="Texture" id=3]
+[ext_resource path="res://sprite/Sub_Weapons/axe/frame0007.png" type="Texture" id=4]
+[ext_resource path="res://sprite/Sub_Weapons/axe/frame0005.png" type="Texture" id=5]
+[ext_resource path="res://sprite/Sub_Weapons/axe/frame0001.png" type="Texture" id=6]
+[ext_resource path="res://sprite/Sub_Weapons/axe/frame0006.png" type="Texture" id=7]
+[ext_resource path="res://sprite/Sub_Weapons/axe/frame0000.png" type="Texture" id=8]
+[ext_resource path="res://axe.gd" type="Script" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 8.0
+} ]
+
+[node name="axe" type="Node2D"]
+position = Vector2( 63.1687, 371.011 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 3, 3 )
+frames = SubResource( 1 )

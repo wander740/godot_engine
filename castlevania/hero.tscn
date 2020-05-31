@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://sprite/attaking/ata_idle/New Piskel.png" type="Texture" id=1]
 [ext_resource path="res://KinematicBody2D.gd" type="Script" id=2]
@@ -8,6 +8,14 @@
 [ext_resource path="res://sprite/duck/New Piskel.png" type="Texture" id=6]
 [ext_resource path="res://sprite/jump/New Piskel.png" type="Texture" id=7]
 [ext_resource path="res://sprite/attaking/ata_duck/New Piskel.png" type="Texture" id=8]
+[ext_resource path="res://sprite/using_sub/frame0002.png" type="Texture" id=9]
+[ext_resource path="res://sprite/using_sub/frame0000.png" type="Texture" id=10]
+[ext_resource path="res://sprite/using_sub/frame0001.png" type="Texture" id=11]
+[ext_resource path="res://sprite/using_sub/frame0005.png" type="Texture" id=12]
+[ext_resource path="res://sprite/using_sub/frame0004.png" type="Texture" id=13]
+[ext_resource path="res://sprite/using_sub/frame0003.png" type="Texture" id=14]
+[ext_resource path="res://sprite/using_sub/frame0006.png" type="Texture" id=15]
+[ext_resource path="res://AttakingStage.gd" type="Script" id=16]
 
 [sub_resource type="Animation" id=1]
 resource_name = "ata_duck"
@@ -35,19 +43,9 @@ tracks/1/keys = {
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5, 2 ]
 }
-tracks/2/type = "method"
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"values": [  ]
-}
 
 [sub_resource type="Animation" id=2]
+length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:animation")
 tracks/0/interp = 1
@@ -67,10 +65,38 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.4, 0.5 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 3, 4, 5 ]
+"values": [ 0, 1, 2, 3, 4 ]
+}
+
+[sub_resource type="Animation" id=39]
+resource_name = "sub"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "sub_weapon" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6 ]
 }
 tracks/2/type = "method"
 tracks/2/path = NodePath(".")
@@ -79,16 +105,19 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 0.4 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "_attack"
+"method": "sub_weapon"
 } ]
 }
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 24, 61.2604 )
+extents = Vector2( 24, 58.2949 )
+
+[sub_resource type="RectangleShape2D" id=38]
+extents = Vector2( 24, 40 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 4 )
@@ -103,84 +132,84 @@ atlas = ExtResource( 4 )
 region = Rect2( 0, 49, 35, 49 )
 
 [sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 35, 49 )
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 108, 49 )
 
 [sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 6 )
-region = Rect2( 35, 0, 35, 49 )
+atlas = ExtResource( 1 )
+region = Rect2( 108, 0, 108, 49 )
 
 [sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 49, 35, 49 )
+atlas = ExtResource( 1 )
+region = Rect2( 0, 49, 108, 49 )
 
 [sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 5 )
-region = Rect2( 0, 0, 35, 49 )
+atlas = ExtResource( 1 )
+region = Rect2( 108, 49, 108, 49 )
 
 [sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 5 )
-region = Rect2( 35, 0, 35, 49 )
+atlas = ExtResource( 1 )
+region = Rect2( 0, 98, 108, 49 )
 
 [sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 5 )
-region = Rect2( 70, 0, 35, 49 )
+atlas = ExtResource( 1 )
+region = Rect2( 108, 98, 108, 49 )
 
 [sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 5 )
-region = Rect2( 0, 49, 35, 49 )
+region = Rect2( 0, 0, 35, 49 )
 
 [sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 5 )
-region = Rect2( 35, 49, 35, 49 )
+region = Rect2( 35, 0, 35, 49 )
 
 [sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 5 )
-region = Rect2( 70, 49, 35, 49 )
+region = Rect2( 70, 0, 35, 49 )
 
 [sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 5 )
-region = Rect2( 0, 98, 35, 49 )
+region = Rect2( 0, 49, 35, 49 )
 
 [sub_resource type="AtlasTexture" id=17]
 atlas = ExtResource( 5 )
-region = Rect2( 35, 98, 35, 49 )
+region = Rect2( 35, 49, 35, 49 )
 
 [sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 5 )
+region = Rect2( 70, 49, 35, 49 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 98, 35, 49 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 5 )
+region = Rect2( 35, 98, 35, 49 )
+
+[sub_resource type="AtlasTexture" id=21]
 atlas = ExtResource( 7 )
 region = Rect2( 0, 49, 35, 49 )
 
-[sub_resource type="AtlasTexture" id=19]
+[sub_resource type="AtlasTexture" id=22]
 atlas = ExtResource( 7 )
 region = Rect2( 35, 49, 35, 49 )
 
-[sub_resource type="AtlasTexture" id=20]
+[sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 7 )
 region = Rect2( 70, 49, 35, 49 )
 
-[sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 8 )
-region = Rect2( 0, 0, 108, 78 )
-
-[sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 8 )
-region = Rect2( 108, 0, 108, 78 )
-
-[sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 8 )
-region = Rect2( 0, 78, 108, 78 )
-
 [sub_resource type="AtlasTexture" id=24]
-atlas = ExtResource( 8 )
-region = Rect2( 108, 78, 108, 78 )
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 35, 49 )
 
 [sub_resource type="AtlasTexture" id=25]
-atlas = ExtResource( 8 )
-region = Rect2( 0, 156, 108, 78 )
+atlas = ExtResource( 6 )
+region = Rect2( 35, 0, 35, 49 )
 
 [sub_resource type="AtlasTexture" id=26]
-atlas = ExtResource( 8 )
-region = Rect2( 108, 156, 108, 78 )
+atlas = ExtResource( 6 )
+region = Rect2( 0, 49, 35, 49 )
 
 [sub_resource type="AtlasTexture" id=27]
 atlas = ExtResource( 7 )
@@ -195,28 +224,28 @@ atlas = ExtResource( 7 )
 region = Rect2( 70, 0, 35, 49 )
 
 [sub_resource type="AtlasTexture" id=30]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 108, 49 )
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 108, 78 )
 
 [sub_resource type="AtlasTexture" id=31]
-atlas = ExtResource( 1 )
-region = Rect2( 108, 0, 108, 49 )
+atlas = ExtResource( 8 )
+region = Rect2( 108, 0, 108, 78 )
 
 [sub_resource type="AtlasTexture" id=32]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 49, 108, 49 )
+atlas = ExtResource( 8 )
+region = Rect2( 0, 78, 108, 78 )
 
 [sub_resource type="AtlasTexture" id=33]
-atlas = ExtResource( 1 )
-region = Rect2( 108, 49, 108, 49 )
+atlas = ExtResource( 8 )
+region = Rect2( 108, 78, 108, 78 )
 
 [sub_resource type="AtlasTexture" id=34]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 98, 108, 49 )
+atlas = ExtResource( 8 )
+region = Rect2( 0, 156, 108, 78 )
 
 [sub_resource type="AtlasTexture" id=35]
-atlas = ExtResource( 1 )
-region = Rect2( 108, 98, 108, 49 )
+atlas = ExtResource( 8 )
+region = Rect2( 108, 156, 108, 78 )
 
 [sub_resource type="SpriteFrames" id=36]
 animations = [ {
@@ -225,25 +254,30 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
 "loop": false,
-"name": "duck",
-"speed": 5.0
+"name": "ata_idle",
+"speed": 8.0
 }, {
-"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ) ],
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
 "loop": true,
 "name": "run",
 "speed": 8.0
 }, {
-"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
-"loop": false,
-"name": "fall",
+"frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 14 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "sub_weapon",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
+"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ) ],
 "loop": false,
-"name": "ata_duck",
-"speed": 8.0
+"name": "fall",
+"speed": 15.0
+}, {
+"frames": [ SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
+"loop": false,
+"name": "duck",
+"speed": 5.0
 }, {
 "frames": [ SubResource( 27 ), SubResource( 28 ), SubResource( 29 ) ],
 "loop": false,
@@ -252,7 +286,7 @@ animations = [ {
 }, {
 "frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ) ],
 "loop": false,
-"name": "ata_idle",
+"name": "ata_duck",
 "speed": 8.0
 } ]
 
@@ -267,29 +301,45 @@ script = ExtResource( 2 )
 [node name="anim" type="AnimationPlayer" parent="."]
 anims/ata_duck = SubResource( 1 )
 anims/ata_idle = SubResource( 2 )
+anims/sub = SubResource( 39 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 1.62903, 3.92747 )
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2( 0.089998, 25.385 )
 shape = SubResource( 3 )
 
+[node name="CollisionDown" type="CollisionShape2D" parent="."]
+position = Vector2( 0.743835, 42.3732 )
+shape = SubResource( 38 )
+disabled = true
+
 [node name="Sprite" type="AnimatedSprite" parent="."]
-position = Vector2( 12.701, -0.815 )
+position = Vector2( 9.42502, 21.2567 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 36 )
-animation = "ata_idle"
-frame = 5
+animation = "sub_weapon"
+frame = 4
+
+[node name="AttakingStage" type="Node" parent="."]
+script = ExtResource( 16 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )
 
 [node name="attaking" type="Area2D" parent="."]
-position = Vector2( -2.70747, -27.9773 )
-__meta__ = {
-"_edit_group_": true
-}
+position = Vector2( -0.549072, 23.815 )
 
 [node name="area" type="CollisionShape2D" parent="attaking"]
-position = Vector2( 89.3469, 1.52588e-05 )
+position = Vector2( 93.1669, -25.2417 )
 shape = SubResource( 37 )
 disabled = true
-[connection signal="animation_finished" from="anim" to="StateMachine" method="_on_anim_animation_finished"]
+
+[node name="area2" type="CollisionShape2D" parent="attaking"]
+position = Vector2( 96.2886, 20.4599 )
+shape = SubResource( 37 )
+disabled = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( -1.39667, 0.698334 )
+current = true
+limit_left = 0
+[connection signal="animation_finished" from="anim" to="AttakingStage" method="_on_anim_animation_finished"]
