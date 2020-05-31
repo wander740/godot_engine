@@ -28,9 +28,11 @@ func _run():
 	if dir == "right":
 		velocity.x = move_speed
 		$Sprite.flip_h = false
+		$attaking.set_scale(Vector2(1, 1))
 	elif dir == "left":
 		velocity.x = -move_speed
 		$Sprite.flip_h = true
+		$attaking.set_scale(Vector2(-1, 1))
 
 func lado(l):
 	$Sprite.flip_h = l
