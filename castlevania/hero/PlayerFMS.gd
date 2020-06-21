@@ -1,4 +1,4 @@
-extends "res://StateMachine.gd"
+extends "res://hero/StateMachine.gd"
 
 enum {IDLE,JUMP,FALL,RUN,DOWN}
 var m_ant
@@ -13,6 +13,11 @@ func _move():
 	return false
 
 func _ready():
+#	add_state("IDLE")
+#	add_state("JUMP")
+#	add_state("FALL")
+#	add_state("RUN")
+#	add_state("DOWN")
 	call_deferred("set_state", IDLE)
 
 func _state_logic(delta):
@@ -20,17 +25,19 @@ func _state_logic(delta):
 	parent._apply_movement()
 
 func _get_transition(delta):
-	if parent.state_attack.state!=parent.state_attack.NONE:
+	if parent.state_attack.state==parent.state_attack.ATTACK:
 		return null
 	match state:
 		IDLE:
 			m_ant = parent.dir
 			var m = _move()
+			
 			if Input.is_action_pressed("jump"):
 				return JUMP
 			elif m:
-				if m_ant != parent.dir:
-					parent.vira()
+				#print("a ",m_ant," b ",parent.dir)
+				#if m_ant != parent.dir:
+				#	parent.vira()
 				return RUN
 			elif Input.is_action_pressed("down"):
 				return DOWN
@@ -46,7 +53,7 @@ func _get_transition(delta):
 			elif !m:
 				return IDLE
 			elif m_ant != parent.dir:
-				parent.vira()
+				#parent.vira()
 				return RUN
 		JUMP:
 			m_ant = parent.dir
@@ -54,8 +61,8 @@ func _get_transition(delta):
 			if parent.velocity.y >= 0:
 				return FALL
 			elif m:
-				if m_ant != parent.dir:
-					parent.vira()
+				#if m_ant != parent.dir:
+				#	parent.vira()
 				return RUN
 		FALL:
 			m_ant = parent.dir
@@ -63,25 +70,30 @@ func _get_transition(delta):
 			if parent.is_on_floor():
 				return IDLE
 			elif m:
-				if m_ant != parent.dir:
-					parent.vira()
+				#if m_ant != parent.dir:
+				#	parent.vira()
 				return RUN
 		DOWN:
 			m_ant = parent.dir
 			_move()
 			if !Input.is_action_pressed("down"):
+				#if m_ant != parent.dir:
+				#	parent.vira()
 				return IDLE
 			elif m_ant != parent.dir:
-				parent.vira()
+				#parent.vira()
 				return DOWN
 	return null
 
 func _enter_state(new_state, old_state):
+	parent.vira()
 	match new_state:
 		IDLE:
+			#print("um ",parent.dir)
 			parent._idle()
 			parent._assign_animation("idle")
 		RUN:
+			#print("dois ",parent.dir)
 			parent._run()
 			if old_state == JUMP || old_state == FALL:
 				call_deferred("st",old_state)
@@ -93,10 +105,7 @@ func _enter_state(new_state, old_state):
 		FALL:
 			parent._assign_animation("fall")
 		DOWN:
-			if parent.dir == "right":
-				parent.lado(false)
-			else:
-				parent.lado(true)
+			print("tres ",parent.dir)
 			parent._idle()
 			parent._assign_animation("duck")
 			parent.on_crunch()

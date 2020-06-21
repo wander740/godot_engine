@@ -4,6 +4,9 @@ enum {NONE,ATTACK,SUB}
 var p = false
 
 func _ready():
+#	add_state("NONE")
+#	add_state("ATTACK")
+#	add_state("SUB")
 	call_deferred("set_state", NONE)
 
 func _get_transition(delta):
@@ -26,6 +29,7 @@ func _get_transition(delta):
 	return null
 	
 func _enter_state(new_state, old_state):
+	parent.vira()
 	match new_state:
 		NONE:
 			parent.state_machine.set_state(parent.state_machine.state)
@@ -35,14 +39,11 @@ func _enter_state(new_state, old_state):
 		ATTACK:
 			match parent.state_machine.state:
 				parent.state_machine.IDLE:
-					parent._attack()
 					parent._anim("ata_idle")
 				parent.state_machine.RUN:
-					parent._attack()
 					parent._idle()
 					parent._anim("ata_idle")
 				parent.state_machine.DOWN:
-					parent._attack()
 					parent._anim("ata_duck")
 				parent.state_machine.JUMP:
 					p = false

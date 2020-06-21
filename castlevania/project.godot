@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
-"path": "res://StateMachine.gd"
+"path": "res://hero/StateMachine.gd"
 } ]
 _global_script_class_icons={
 "StateMachine": ""
@@ -22,7 +22,6 @@ _global_script_class_icons={
 
 config/name="Castlevania"
 run/main_scene="res://world.tscn"
-config/icon="res://icon.png"
 
 [display]
 
@@ -66,6 +65,11 @@ weapon={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":76,"unicode":0,"echo":false,"script":null)
  ]
 }
+next={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":5,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
 
 [rendering]
 
@@ -73,4 +77,3 @@ quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 environment/default_clear_color=Color( 0, 0, 0, 1 )
-environment/default_environment="res://default_env.tres"

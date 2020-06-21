@@ -12,6 +12,7 @@ func _physics_process(delta):
 		_state_logic(delta)
 		var transition = _get_transition(delta)
 		if transition != null:
+			print("tr ",transition)
 			set_state(transition)
 
 func _state_logic(delta):
